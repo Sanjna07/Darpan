@@ -2,9 +2,15 @@ import { Activity, Globe, Zap, Shield, ExternalLink } from 'lucide-react';
 
 interface IntelligenceGridProps {
   mode?: 'full' | 'statistics';
+  focusMode?: boolean;
+  focusTarget?: 'dashboard' | 'statistics' | 'sources' | 'knowledge-graph';
 }
 
-export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProps) {
+export default function IntelligenceGrid({
+  mode = 'full',
+  focusMode = false,
+  focusTarget = 'dashboard',
+}: IntelligenceGridProps) {
   const stats = [
     { label: 'Active Signals', value: '2,847', icon: Activity },
     { label: 'Data Sources', value: '156', icon: Globe },
@@ -21,7 +27,13 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
   if (mode === 'statistics') {
     return (
       <section id="real-time-statistics" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="bg-white/70 backdrop-blur-xl border border-gray-200/50 rounded-3xl shadow-xl shadow-gray-900/5 p-6 sm:p-8">
+        <div
+          className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-6 sm:p-8 transition-all duration-300 ${
+            focusMode && focusTarget !== 'statistics'
+              ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
+              : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+          }`}
+        >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Real-time Statistics</h2>
             <span className="relative flex h-3 w-3">
@@ -34,7 +46,11 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-4 sm:p-5 hover:shadow-lg hover:scale-[1.02] transition-all"
+                  className={`bg-gradient-to-br from-gray-50 to-white border rounded-2xl p-4 sm:p-5 hover:shadow-lg hover:scale-[1.02] transition-all ${
+                    focusMode && focusTarget === 'statistics' && index === 0
+                      ? 'border-indigo-400 ring-2 ring-indigo-200 shadow-lg shadow-indigo-200/50'
+                      : 'border-gray-200'
+                  }`}
               >
                 <stat.icon className="w-5 h-5 text-indigo-600 mb-2" />
                 <p className="text-2xl sm:text-3xl font-mono font-bold text-gray-900">{stat.value}</p>
@@ -51,7 +67,14 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
     <section id="real-time-statistics" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <div className="bg-white/70 backdrop-blur-xl border border-gray-200/50 rounded-3xl shadow-xl shadow-gray-900/5 p-6 sm:p-8 h-full flex flex-col">
+          <div
+            id="dashboard-section"
+            className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-6 sm:p-8 h-full flex flex-col transition-all duration-300 ${
+              focusMode && focusTarget !== 'dashboard'
+                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
+                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+            }`}
+          >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Intelligence Analysis</h3>
             </div>
@@ -78,7 +101,13 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
             </div>
 
             <div className="mt-auto">
-              <div className="mt-6 p-4 sm:p-6 bg-gradient-to-br from-indigo-50 to-violet-50 border-l-4 border-indigo-500 rounded-xl">
+              <div
+                className={`mt-6 p-4 sm:p-6 bg-gradient-to-br from-indigo-50 to-violet-50 border-l-4 border-indigo-500 rounded-xl transition-all ${
+                  focusMode && focusTarget === 'dashboard'
+                    ? 'ring-2 ring-indigo-200 shadow-md shadow-indigo-200/60'
+                    : ''
+                }`}
+              >
                 <p className="text-xs sm:text-sm font-semibold text-indigo-900 mb-2">Key Insight</p>
                 <p className="text-sm sm:text-base text-gray-700 italic leading-relaxed">
                   "Strategic repositioning in critical supply chains indicates a long-term shift toward regional resilience over global efficiency optimization."
@@ -95,7 +124,14 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white/70 backdrop-blur-xl border border-gray-200/50 rounded-3xl shadow-xl shadow-gray-900/5 p-6">
+          <div
+            id="statistics-section"
+            className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-6 transition-all duration-300 ${
+              focusMode && focusTarget !== 'statistics'
+                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
+                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+            }`}
+          >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Real-time Statistics</h3>
               <span className="relative flex h-2 w-2">
@@ -108,7 +144,11 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
               {stats.map((stat, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-3 sm:p-4 hover:shadow-lg hover:scale-[1.02] sm:hover:scale-105 transition-all cursor-pointer"
+                  className={`bg-gradient-to-br from-gray-50 to-white border rounded-2xl p-3 sm:p-4 hover:shadow-lg hover:scale-[1.02] sm:hover:scale-105 transition-all cursor-pointer ${
+                    focusMode && focusTarget === 'statistics' && index === 0
+                      ? 'border-indigo-400 ring-2 ring-indigo-200 shadow-lg shadow-indigo-200/50'
+                      : 'border-gray-200'
+                  }`}
                 >
                   <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 mb-1 sm:mb-2" />
                   <p className="text-xl sm:text-2xl font-mono font-bold text-gray-900">{stat.value}</p>
@@ -118,13 +158,24 @@ export default function IntelligenceGrid({ mode = 'full' }: IntelligenceGridProp
             </div>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-xl border border-gray-200/50 rounded-3xl shadow-xl shadow-gray-900/5 p-4 sm:p-6">
+          <div
+            id="sources-section"
+            className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-4 sm:p-6 transition-all duration-300 ${
+              focusMode && focusTarget !== 'sources'
+                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
+                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+            }`}
+          >
             <h3 className="text-lg font-bold text-gray-900 mb-4">Sources</h3>
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {sources.map((source, index) => (
                 <div
                   key={index}
-                  className="p-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all cursor-pointer group"
+                  className={`p-3 bg-gradient-to-r from-gray-50 to-white border rounded-xl hover:border-indigo-300 hover:bg-indigo-50 transition-all cursor-pointer group ${
+                    focusMode && focusTarget === 'sources' && index === 0
+                      ? 'border-indigo-400 ring-2 ring-indigo-200 shadow-md shadow-indigo-200/50'
+                      : 'border-gray-200'
+                  }`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">{source.name}</p>

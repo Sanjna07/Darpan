@@ -1,6 +1,14 @@
 import { ZoomIn, ZoomOut, Focus, Download } from 'lucide-react';
 
-export default function KnowledgeGraph() {
+interface KnowledgeGraphProps {
+  focusMode?: boolean;
+  focusTarget?: 'dashboard' | 'statistics' | 'sources' | 'knowledge-graph';
+}
+
+export default function KnowledgeGraph({
+  focusMode = false,
+  focusTarget = 'knowledge-graph',
+}: KnowledgeGraphProps) {
   const nodes = [
     { id: 1, label: 'Semiconductors', x: 50, y: 50, size: 'large', color: 'indigo' },
     { id: 2, label: 'Energy', x: 25, y: 30, size: 'medium', color: 'violet' },
@@ -39,8 +47,14 @@ export default function KnowledgeGraph() {
   };
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-      <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200/50 rounded-3xl shadow-2xl shadow-indigo-900/5 overflow-hidden">
+    <div id="knowledge-graph-section" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div
+        className={`bg-gradient-to-br from-gray-50 to-white border rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 ${
+          focusMode && focusTarget !== 'knowledge-graph'
+            ? 'opacity-35 border-gray-200/50 shadow-indigo-900/5'
+            : 'opacity-100 border-indigo-300 ring-2 ring-indigo-200/70 shadow-indigo-300/20'
+        }`}
+      >
         <div className="p-6 border-b border-gray-200/50 flex items-center justify-between">
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Knowledge Graph</h3>
@@ -105,7 +119,13 @@ export default function KnowledgeGraph() {
               className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-110 cursor-pointer"
               style={{ left: `${node.x}%`, top: `${node.y}%`, zIndex: 2 }}
             >
-              <div className={`${getSizeClass(node.size)} bg-gradient-to-br ${getColorClass(node.color)} border-2 rounded-full shadow-xl flex items-center justify-center relative group`}>
+              <div
+                className={`${getSizeClass(node.size)} bg-gradient-to-br ${getColorClass(node.color)} border-2 rounded-full shadow-xl flex items-center justify-center relative group ${
+                  focusMode && focusTarget === 'knowledge-graph' && node.id === 1
+                    ? 'ring-4 ring-indigo-200/80 scale-110'
+                    : ''
+                }`}
+              >
                 <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
                 <span className="text-white font-semibold text-xs sm:text-sm text-center px-2 relative z-10">
                   {node.label}
