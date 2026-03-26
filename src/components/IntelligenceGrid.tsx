@@ -1,4 +1,4 @@
-import { TrendingUp, Activity, Globe, Zap, Shield, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Activity, Globe, Zap, Shield, ExternalLink } from 'lucide-react';
 
 export default function IntelligenceGrid() {
   const stats = [
