@@ -27,14 +27,24 @@ export default function MobileNav() {
           </div>
           <span className="text-[10px] font-semibold">Query</span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-3 py-2 text-gray-600 transition-all active:scale-90">
-          <div className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+        <button
+          onClick={() => setPanel('knowledge-graph')}
+          className={`flex flex-col items-center gap-1 px-3 py-2 transition-all active:scale-90 ${
+            activePanel === 'knowledge-graph' ? 'text-indigo-600' : 'text-gray-600'
+          }`}
+        >
+          <div className={`p-2 rounded-xl transition-colors ${activePanel === 'knowledge-graph' ? 'bg-indigo-100' : 'hover:bg-gray-100'}`}>
             <Network className="w-5 h-5" />
           </div>
           <span className="text-[10px] font-semibold">Graph</span>
         </button>
-        <button className="flex flex-col items-center gap-1 px-3 py-2 text-gray-600 transition-all active:scale-90">
-          <div className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+        <button
+          onClick={() => setPanel('evidence')}
+          className={`flex flex-col items-center gap-1 px-3 py-2 transition-all active:scale-90 ${
+            activePanel === 'evidence' ? 'text-indigo-600' : 'text-gray-600'
+          }`}
+        >
+          <div className={`p-2 rounded-xl transition-colors ${activePanel === 'evidence' ? 'bg-indigo-100' : 'hover:bg-gray-100'}`}>
             <FileText className="w-5 h-5" />
           </div>
           <span className="text-[10px] font-semibold">Source</span>

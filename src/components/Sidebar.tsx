@@ -32,11 +32,25 @@ export default function Sidebar() {
               <Brain className="w-5 h-5" />
               Intelligence
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+            <button
+              onClick={() => setPanel('knowledge-graph')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                activePanel === 'knowledge-graph'
+                  ? 'text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-lg shadow-indigo-500/30'
+                  : 'text-gray-600 hover:text-indigo-600 hover:bg-indigo-50'
+              }`}
+            >
               <Network className="w-5 h-5" />
               Knowledge Graph
             </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+            <button
+              onClick={() => setPanel('evidence')}
+              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                activePanel === 'evidence'
+                  ? 'text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-lg shadow-indigo-500/30'
+                  : 'text-gray-600 hover:text-indigo-600 hover:bg-indigo-50'
+              }`}
+            >
               <FileText className="w-5 h-5" />
               Evidence
             </button>
