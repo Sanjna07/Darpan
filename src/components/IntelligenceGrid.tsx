@@ -64,15 +64,17 @@ export default function IntelligenceGrid({
   }
 
   return (
-    <section id="real-time-statistics" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <section id="intelligence-section" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div
             id="dashboard-section"
             className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-6 sm:p-8 h-full flex flex-col transition-all duration-300 ${
-              focusMode && focusTarget !== 'dashboard'
-                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
-                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+              focusMode
+                ? focusTarget === 'dashboard'
+                  ? 'opacity-100 border-indigo-400 ring-4 ring-indigo-200/70 shadow-2xl shadow-indigo-200/50 scale-[1.01] z-10'
+                  : 'opacity-30 grayscale-[0.5] blur-[1px]'
+                : 'opacity-100 border-gray-200/50 shadow-gray-900/5'
             }`}
           >
             <div className="flex items-center justify-between mb-6">
@@ -127,9 +129,11 @@ export default function IntelligenceGrid({
           <div
             id="statistics-section"
             className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-6 transition-all duration-300 ${
-              focusMode && focusTarget !== 'statistics'
-                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
-                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+              focusMode
+                ? focusTarget === 'statistics'
+                  ? 'opacity-100 border-indigo-400 ring-4 ring-indigo-200/70 shadow-2xl shadow-indigo-200/50 scale-[1.01] z-10'
+                  : 'opacity-30 grayscale-[0.5] blur-[1px]'
+                : 'opacity-100 border-gray-200/50 shadow-gray-900/5'
             }`}
           >
             <div className="flex items-center justify-between mb-6">
@@ -161,9 +165,11 @@ export default function IntelligenceGrid({
           <div
             id="sources-section"
             className={`bg-white/70 backdrop-blur-xl border rounded-3xl shadow-xl p-4 sm:p-6 transition-all duration-300 ${
-              focusMode && focusTarget !== 'sources'
-                ? 'opacity-35 border-gray-200/50 shadow-gray-900/5'
-                : 'opacity-100 border-indigo-300 shadow-indigo-200/40 ring-2 ring-indigo-200/70'
+              focusMode
+                ? focusTarget === 'sources'
+                  ? 'opacity-100 border-indigo-400 ring-4 ring-indigo-200/70 shadow-2xl shadow-indigo-200/50 scale-[1.01] z-10'
+                  : 'opacity-30 grayscale-[0.5] blur-[1px]'
+                : 'opacity-100 border-gray-200/50 shadow-gray-900/5'
             }`}
           >
             <h3 className="text-lg font-bold text-gray-900 mb-4">Sources</h3>

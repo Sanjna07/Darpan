@@ -220,7 +220,7 @@ export default function EvidencePanel() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              Live Feed {liveCount}/{MAX_VISIBLE_ITEMS}
+              Live Feed 
             </div>
             <div className="hidden sm:inline-flex items-center gap-2 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1">
               <ShieldCheck className="w-4 h-4" />

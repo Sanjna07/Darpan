@@ -50,9 +50,11 @@ export default function KnowledgeGraph({
     <div id="knowledge-graph-section" className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <div
         className={`bg-gradient-to-br from-gray-50 to-white border rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 ${
-          focusMode && focusTarget !== 'knowledge-graph'
-            ? 'opacity-35 border-gray-200/50 shadow-indigo-900/5'
-            : 'opacity-100 border-indigo-300 ring-2 ring-indigo-200/70 shadow-indigo-300/20'
+          focusMode
+            ? focusTarget === 'knowledge-graph'
+              ? 'opacity-100 border-indigo-400 ring-4 ring-indigo-200/70 shadow-2xl shadow-indigo-300/20 scale-[1.01] z-10'
+              : 'opacity-30 grayscale-[0.5] blur-[1px]'
+            : 'border-gray-200/50 shadow-indigo-900/5'
         }`}
       >
         <div className="p-6 border-b border-gray-200/50 flex items-center justify-between">

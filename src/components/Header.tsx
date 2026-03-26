@@ -1,12 +1,24 @@
-import { Download, Database, Menu, X, BarChart3, Network, FileText, Brain } from 'lucide-react';
+import { Download, Database, Menu, X, BarChart3, Network, FileText, Brain, Focus } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
   isSidebarOpen?: boolean;
+  focusMode?: boolean;
+  setFocusMode?: (mode: boolean | ((prev: boolean) => boolean)) => void;
+  focusTarget?: string;
+  setFocusTarget?: (target: any) => void;
 }
 
-export default function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
+export default function Header({ 
+  onMenuToggle, 
+  isSidebarOpen,
+  focusMode,
+  setFocusMode,
+  focusTarget,
+  setFocusTarget
+}: HeaderProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const activePanel = searchParams.get('panel') ?? 'intelligence';
 
@@ -30,7 +42,10 @@ export default function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
               {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
             <div 
-              onClick={() => setPanel('intelligence')}
+              onClick={() => {
+                setPanel('intelligence');
+                if (setFocusMode) setFocusMode(false);
+              }}
               className="flex items-center gap-2 sm:gap-3 cursor-pointer"
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center transform rotate-45 transition-transform hover:scale-110">
@@ -55,10 +70,71 @@ export default function Header({ onMenuToggle, isSidebarOpen }: HeaderProps) {
           </div>
 
           <nav className="hidden lg:flex items-center gap-1 bg-gray-50/50 p-1 rounded-xl border border-gray-100">
+            {activePanel === 'intelligence' && setFocusMode && (
+              <div className="relative group/focus">
+                <button 
+                  onClick={() => setFocusMode(prev => !prev)}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
+                    focusMode 
+                      ? 'text-white bg-gradient-to-r from-indigo-600 to-violet-600 shadow-md shadow-indigo-500/30' 
+                      : 'text-gray-600 hover:text-indigo-600 hover:bg-white/50'
+                  }`}
+                >
+                  <Focus className="w-4 h-4" />
+                  Focus Mode
+                </button>
+
+                {focusMode && setFocusTarget && (
+                    <div className="absolute top-full left-0 pt-2 w-56 opacity-0 group-hover/focus:opacity-100 pointer-events-none group-hover/focus:pointer-events-auto transition-all z-50 transform origin-top scale-95 group-hover/focus:scale-100">
+                      <div className="bg-white border border-gray-200 rounded-xl shadow-2xl py-2">
+                        <div className="px-3 py-1 mb-1 border-b border-gray-100">
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Navigate to</p>
+                        </div>
+                        <button
+                          onClick={() => setFocusTarget('dashboard')}
+                          className={`w-full px-4 py-2 text-xs font-semibold text-left transition-all hover:bg-indigo-50 flex items-center justify-between ${
+                            focusTarget === 'dashboard' ? 'text-indigo-600 bg-indigo-50/50' : 'text-gray-600'
+                          }`}
+                        >
+                          <span>Dashboard</span>
+                          {focusTarget === 'dashboard' && <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />}
+                        </button>
+                        <button
+                          onClick={() => setFocusTarget('statistics')}
+                          className={`w-full px-4 py-2 text-xs font-semibold text-left transition-all hover:bg-indigo-50 flex items-center justify-between ${
+                            focusTarget === 'statistics' ? 'text-indigo-600 bg-indigo-50/50' : 'text-gray-600'
+                          }`}
+                        >
+                          <span>Real-time Statistics</span>
+                          {focusTarget === 'statistics' && <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />}
+                        </button>
+                        <button
+                          onClick={() => setFocusTarget('sources')}
+                          className={`w-full px-4 py-2 text-xs font-semibold text-left transition-all hover:bg-indigo-50 flex items-center justify-between ${
+                            focusTarget === 'sources' ? 'text-indigo-600 bg-indigo-50/50' : 'text-gray-600'
+                          }`}
+                        >
+                          <span>Sources</span>
+                          {focusTarget === 'sources' && <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />}
+                        </button>
+                        <button
+                          onClick={() => setFocusTarget('knowledge-graph')}
+                          className={`w-full px-4 py-2 text-xs font-semibold text-left transition-all hover:bg-indigo-50 flex items-center justify-between ${
+                            focusTarget === 'knowledge-graph' ? 'text-indigo-600 bg-indigo-50/50' : 'text-gray-600'
+                          }`}
+                        >
+                          <span>Knowledge Graph</span>
+                          {focusTarget === 'knowledge-graph' && <div className="w-1.5 h-1.5 bg-indigo-600 rounded-full" />}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+              </div>
+            )}
             <button 
               onClick={() => setPanel('intelligence')}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2 ${
-                activePanel === 'intelligence' 
+                activePanel === 'intelligence' && !focusMode
                   ? 'text-indigo-600 bg-white shadow-sm border border-indigo-100' 
                   : 'text-gray-600 hover:text-indigo-600 hover:bg-white/50'
               }`}
